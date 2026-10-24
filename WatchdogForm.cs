@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 internal sealed class WatchdogForm : Form
@@ -93,8 +93,7 @@ internal sealed class WatchdogForm : Form
 
         try
         {
-            var executablePath = Environment.ProcessPath
-                ?? throw new InvalidOperationException("Не удалось определить путь к EXE.");
+            var executablePath = Application.ExecutablePath;
 
             if (requestedState)
             {
@@ -159,6 +158,6 @@ internal sealed class WatchdogForm : Form
 
     private static string Truncate(string text, int maxLength)
     {
-        return text.Length <= maxLength ? text : text[..(maxLength - 1)] + "…";
+        return text.Length <= maxLength ? text : text.Substring(0, maxLength - 1) + "…";
     }
 }
