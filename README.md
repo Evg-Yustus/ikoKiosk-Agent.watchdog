@@ -1,8 +1,14 @@
-# iikoKiosk Agent watchdog
+﻿# iikoKiosk Agent watchdog
+
+Теги: iiko, iikoKiosk
 
 Готовый файл:
 
-dist\\iikoKiosk-Agent.watchdog.exe
+dist\iikoKiosk-Agent.watchdog.exe
+
+Сборка выполнена под .NET Framework 4.7.2 и работает на системах с .NET Framework 4.7.2–4.8. .NET 8 и другие runtime-компоненты внутрь EXE не включаются. Для запуска требуется установленный .NET Framework; рекомендуется .NET Framework 4.8.
+
+Размер публикации: около 30 КБ (EXE и файл конфигурации), что значительно меньше 10 МБ.
 
 Программа:
 
@@ -21,12 +27,12 @@ Watchdog полностью автономен: он сам управляет �
 Путь к приложению агента ищется в следующих местах:
 
 1. рядом с watchdog;
-2. C:\\RMS\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe;
-3. C:\\Program Files\\iiko\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe;
-4. C:\\Program Files (x86)\\iiko\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe.
+2. C:\RMS\iikoRMS\Front.Net\Resto.CashServer.ServiceControl.exe;
+3. C:\Program Files\iiko\iikoRMS\Front.Net\Resto.CashServer.ServiceControl.exe;
+4. C:\Program Files (x86)\iiko\iikoRMS\Front.Net\Resto.CashServer.ServiceControl.exe.
 
 Для отключения автозапуска снимите ту же галочку в меню значка tray.
 
 Сборка:
 
-    dotnet publish .\\iikoKiosk-Agent.watchdog.csproj --configuration Release --runtime win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=None -p:DebugSymbols=false -o .\\dist
+    dotnet publish .\iikoKiosk-Agent.watchdog.csproj --configuration Release -p:DebugType=None -p:DebugSymbols=false -o .\dist
