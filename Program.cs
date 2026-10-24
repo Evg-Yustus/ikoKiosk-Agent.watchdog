@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Security.Principal;
 using System.ComponentModel;
@@ -23,7 +23,8 @@ internal static class Program
             return 0;
         }
 
-        ApplicationConfiguration.Initialize();
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
         Application.Run(new WatchdogForm());
         return 0;
     }
@@ -50,7 +51,7 @@ internal static class Elevation
 
         try
         {
-            var executablePath = Environment.ProcessPath;
+            var executablePath = Application.ExecutablePath;
             if (string.IsNullOrWhiteSpace(executablePath))
             {
                 throw new InvalidOperationException("Не удалось определить путь к EXE.");
