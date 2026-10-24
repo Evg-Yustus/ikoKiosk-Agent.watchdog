@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 
 internal static class StartupTaskManager
@@ -57,6 +57,7 @@ internal static class StartupTaskManager
             StartInfo = new ProcessStartInfo
             {
                 FileName = "schtasks.exe",
+                Arguments = string.Join(" ", arguments.Select(QuoteArgument)),
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
@@ -65,11 +66,6 @@ internal static class StartupTaskManager
                 StandardErrorEncoding = Encoding.UTF8
             }
         };
-
-        foreach (var argument in arguments)
-        {
-            process.StartInfo.ArgumentList.Add(argument);
-        }
 
         process.Start();
         var outputTask = process.StandardOutput.ReadToEndAsync();
@@ -82,6 +78,48 @@ internal static class StartupTaskManager
             : errorTask.Result.Trim();
 
         return new(process.ExitCode, errorText);
+    }
+
+    private static string QuoteArgument(string argument)
+    {
+        if (argument.Length == 0)
+        {
+            return "\"\"";
+        }
+
+        if (!argument.Any(char.IsWhiteSpace) && !argument.Contains('"'))
+        {
+            return argument;
+        }
+
+        var builder = new StringBuilder(argument.Length + 2);
+        var backslashes = 0;
+        builder.Append('"');
+
+        foreach (var character in argument)
+        {
+            if (character == '\\')
+            {
+                backslashes++;
+                continue;
+            }
+
+            if (character == '"')
+            {
+                builder.Append('\\', backslashes * 2 + 1);
+                builder.Append('"');
+                backslashes = 0;
+                continue;
+            }
+
+            builder.Append('\\', backslashes);
+            builder.Append(character);
+            backslashes = 0;
+        }
+
+        builder.Append('\\', backslashes * 2);
+        builder.Append('"');
+        return builder.ToString();
     }
 
     private readonly record struct SchtasksResult(int ExitCode, string ErrorText);
