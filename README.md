@@ -18,13 +18,14 @@ dist\\iikoKiosk-Agent.watchdog.exe
 
 При первом ручном запуске без прав администратора EXE запрашивает UAC. Автозапуск создаётся как задача планировщика с уровнем HIGHEST, поэтому при последующих входах пользователя отдельный UAC-запрос не появляется.
 
+Watchdog полностью автономен: он сам управляет службой через Windows API и сам запускает приложение агента через Process.Start. Внешние скрипты не используются.
+
 Путь к приложению агента ищется в следующих местах:
 
 1. рядом с watchdog;
 2. C:\\RMS\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe;
 3. C:\\Program Files\\iiko\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe;
-4. C:\\Program Files (x86)\\iiko\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe;
-5. в RestoCashServerStart.cmd на рабочем столе или в C:\\ProgramData.
+4. C:\\Program Files (x86)\\iiko\\iikoRMS\\Front.Net\\Resto.CashServer.ServiceControl.exe.
 
 Для отключения автозапуска снимите ту же галочку в меню значка tray.
 
