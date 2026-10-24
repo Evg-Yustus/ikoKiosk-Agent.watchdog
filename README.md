@@ -1,7 +1,5 @@
 # iikoKiosk Agent watchdog
 
-Теги: iiko, iikoKiosk
-
 Готовый файл:
 
 dist\\iikoKiosk-Agent.watchdog.exe
